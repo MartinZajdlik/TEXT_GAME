@@ -1,3 +1,5 @@
+package martingame.ability;
+
 public enum Ability {
 
     ATTACK ("Attack is the ability to deal damage. Final damage is also affected by dexterity and skill."),

@@ -1,3 +1,5 @@
+package martingame.utility;
+
 import java.util.Scanner;
 
 public class InputUtils {
