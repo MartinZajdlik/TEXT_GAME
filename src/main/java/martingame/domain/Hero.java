@@ -17,6 +17,14 @@ public class Hero {
         this.abilities = this.getInitialAbilities();
         this.heroAvailablePoints = Constant.INITIAL_ABILITY_POINTS;
     }
+    public Hero(String name,Map<Ability, Integer> abilities, int heroAvailablePoints) {
+        this.name = name;
+        this.abilities =  abilities;
+        this.heroAvailablePoints = heroAvailablePoints;
+    }
+
+
+
 
     public String getName() {
         return name;
