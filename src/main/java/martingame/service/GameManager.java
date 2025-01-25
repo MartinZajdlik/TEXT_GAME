@@ -2,10 +2,14 @@ package martingame.service;
 
 import martingame.ability.HeroAbilityManager;
 import martingame.constant.Constant;
+import martingame.domain.Enemy;
 import martingame.domain.Hero;
 import martingame.domain.LoadedGame;
+import martingame.utility.EnemyGenerator;
 import martingame.utility.InputUtils;
 import martingame.utility.PrintUtils;
+
+import java.util.Map;
 
 public class GameManager {
 
@@ -13,6 +17,9 @@ public class GameManager {
     private final HeroAbilityManager heroAbilityManager;
     private int currentLevel;
     private final FileService fileService;
+    private final Map<Integer, Enemy> enemiesByLevel;
+    private final BattleService battleService;
+
 
 
     public GameManager() {
@@ -20,13 +27,16 @@ public class GameManager {
         this.heroAbilityManager = new HeroAbilityManager(this.hero);
         this.currentLevel = Constant.INITIAL_LEVEL;
         this.fileService = new FileService();
+        this.enemiesByLevel = EnemyGenerator.createEnemies();
+        this.battleService = new BattleService();
     }
 
     public void startGame() {
         this.initGame();
 
-        while (this.currentLevel <= 5) {
-            System.out.println("0. Fight " + "Level " + this.currentLevel);
+        while (this.currentLevel <= this.enemiesByLevel.size()) {
+            final Enemy enemy = this.enemiesByLevel.get(this.currentLevel);
+            System.out.println("0. Fight " + enemy.getName() + "(Level " + this.currentLevel+")");
             System.out.println("1. Upgrade abilities (" + hero.getHeroAvailablePoints() + " points to spend)");
             System.out.println("2. Save Game");
             System.out.println("3. Exit game");
@@ -35,7 +45,13 @@ public class GameManager {
             switch (choice) {
                 case 0 -> {
 
+                    if (this.battleService.isHeroReadyToBattle(this.hero, enemy)) {
+
+                        // TODO battle
                     this.currentLevel++;
+                    }
+
+
                 }
                 case 1 -> {
 
