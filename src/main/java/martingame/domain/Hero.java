@@ -6,39 +6,28 @@ import martingame.constant.Constant;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Hero {
-    private String name;
-    private Map<Ability, Integer> abilities;
+public class Hero extends GameCharacter {
+
 
     private int heroAvailablePoints;
 
-    public Hero ( String name){
-        this.name = name;
+    public Hero(String name) {
+        super(name, new HashMap<>());
         this.abilities = this.getInitialAbilities();
         this.heroAvailablePoints = Constant.INITIAL_ABILITY_POINTS;
     }
-    public Hero(String name,Map<Ability, Integer> abilities, int heroAvailablePoints) {
-        this.name = name;
-        this.abilities =  abilities;
+
+    public Hero(String name, Map<Ability, Integer> abilities, int heroAvailablePoints) {
+        super(name, abilities);
         this.heroAvailablePoints = heroAvailablePoints;
     }
 
-
-
-
-    public String getName() {
-        return name;
-    }
-
-    public Map<Ability, Integer> getAbilities() {
-        return abilities;
-    }
 
     public int getHeroAvailablePoints() {
         return heroAvailablePoints;
     }
 
-    public void updateAvailablePoints (int delta) {
+    public void updateAvailablePoints(int delta) {
         this.heroAvailablePoints += delta;
     }
 
@@ -46,7 +35,7 @@ public class Hero {
     public void updateAbility(Ability ability, int delta) {
         if (ability.equals(Ability.HEALTH)) {
             this.abilities.put(ability, this.abilities.get(ability) + delta * Constant.HEALTH_OF_ONE_POINT);
-        }else {
+        } else {
             this.abilities.put(ability, this.abilities.get(ability) + delta);
         }
     }
@@ -57,12 +46,12 @@ public class Hero {
 
     private Map<Ability, Integer> getInitialAbilities() {
         return new HashMap<>(Map.of(
-            Ability.ATTACK, 1,
-            Ability.DEFENSE,1,
-            Ability.DEXTERITY,1,
-            Ability.SKILL,1,
-            Ability.LUCK,1,
-            Ability.HEALTH,50
+                Ability.ATTACK, 1,
+                Ability.DEFENSE, 1,
+                Ability.DEXTERITY, 1,
+                Ability.SKILL, 1,
+                Ability.LUCK, 1,
+                Ability.HEALTH, 50
         ));
     }
 
