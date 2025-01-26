@@ -1,5 +1,6 @@
 package martingame.service;
 
+import martingame.ability.Ability;
 import martingame.ability.HeroAbilityManager;
 import martingame.constant.Constant;
 import martingame.domain.Enemy;
@@ -31,7 +32,7 @@ public class GameManager {
         this.battleService = new BattleService();
     }
 
-    public void startGame() {
+    public void startGame() throws InterruptedException {
         this.initGame();
 
         while (this.currentLevel <= this.enemiesByLevel.size()) {
@@ -46,12 +47,23 @@ public class GameManager {
                 case 0 -> {
 
                     if (this.battleService.isHeroReadyToBattle(this.hero, enemy)) {
+                        final int heroHealthBeforeBattle = this.hero.getAbilities().get(Ability.HEALTH);
 
-                        // TODO battle
-                    this.currentLevel++;
+                        final boolean hasHeroWon = this.battleService.battle(this.hero, enemy);
+                        if (hasHeroWon) {
+                            PrintUtils.printDivider();
+                            System.out.println("You have won this battle! You have gained "+ this.currentLevel+ " ability points.");
+                            this.hero.updateAvailablePoints(this.currentLevel);
+                            this.currentLevel++;
+                        }else{
+                            System.out.println("You have lost!");
+                        }
+                        this.hero.setAbility(Ability.HEALTH, heroHealthBeforeBattle);
+                        System.out.println("You have full health now");
+                        PrintUtils.printDivider();
+
+
                     }
-
-
                 }
                 case 1 -> {
 

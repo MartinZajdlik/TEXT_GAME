@@ -31,6 +31,10 @@ public class Hero extends GameCharacter {
         this.heroAvailablePoints += delta;
     }
 
+    public void setAbility(Ability ability, int value) {
+        abilities.put(ability, value);
+    }
+
 
     public void updateAbility(Ability ability, int delta) {
         if (ability.equals(Ability.HEALTH)) {
